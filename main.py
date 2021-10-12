@@ -11,7 +11,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--lr', type = float, default = 0.1)
 parser.add_argument('--noise_type', type = str, help='clean, aggre, worst, rand1, rand2, rand3, clean100, noisy100', default='clean')
-parser.add_argument('--noise_path', type = str, help='path of CIFAR-10_human.pt', default='./data/CIFAR-10_human.pt')
+parser.add_argument('--noise_path', type = str, help='path of CIFAR-10_human.pt', default=None)
 parser.add_argument('--dataset', type = str, help = ' cifar10 or cifar100', default = 'cifar10')
 parser.add_argument('--n_epoch', type=int, default=100)
 parser.add_argument('--seed', type=int, default=0)
@@ -99,12 +99,20 @@ torch.manual_seed(args.seed)
 torch.cuda.manual_seed(args.seed)
 
 # Hyper Parameters
-
 batch_size = 128
 learning_rate = args.lr
 noise_type_map = {'clean':'clean_label', 'worst': 'worse_label', 'aggre': 'aggre_label', 'rand1': 'random_label1', 'rand2': 'random_label2', 'rand3': 'random_label3', 'clean100': 'clean_label', 'noisy100': 'noisy_label'}
 args.noise_type = noise_type_map[args.noise_type]
 # load dataset
+if args.noise_path is None:
+    if args.dataset == 'cifar10':
+        args.noise_path = './data/CIFAR-10_human.pt'
+    elif args.dataset == 'cifar100':
+        args.noise_path = './data/CIFAR-100_human.pt'
+    else: 
+        raise NameError(f'Undefined dataset {args.dataset}')
+
+
 train_dataset,test_dataset,num_classes,num_training_samples = input_dataset(args.dataset,args.noise_type, args.noise_path, args.is_human)
 noise_prior = train_dataset.noise_prior
 noise_or_not = train_dataset.noise_or_not
