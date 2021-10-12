@@ -10,7 +10,7 @@ else:
     import pickle
 import torch
 import torch.utils.data as data
-from .utils import download_url, check_integrity, noisify,noisify_instance, multiclass_noisify
+from .utils import download_url, check_integrity, multiclass_noisify
 
 class CIFAR10(data.Dataset):
     """`CIFAR10 <https://www.cs.toronto.edu/~kriz/cifar.html>`_ Dataset.
