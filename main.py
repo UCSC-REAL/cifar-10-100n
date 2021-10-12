@@ -152,7 +152,7 @@ for epoch in range(args.n_epoch):
     model.train()
     train_acc = train(epoch, train_loader, model, optimizer)
     # evaluate models
-    test_acc, best_acc_ = evaluate(test_loader=test_loader, save=True, model=model,epoch=epoch,best_acc_=best_acc_,args=args)
+    test_acc, best_acc_ = evaluate(test_loader=test_loader, model=model,best_acc_=best_acc_)
     # save results
     print('train acc on train images is ', train_acc)
     print('test acc on test images is ', test_acc)
