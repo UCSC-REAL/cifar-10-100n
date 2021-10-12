@@ -17,7 +17,7 @@ parser.add_argument('--n_epoch', type=int, default=100)
 parser.add_argument('--seed', type=int, default=0)
 parser.add_argument('--print_freq', type=int, default=50)
 parser.add_argument('--num_workers', type=int, default=4, help='how many subprocesses to use for data loading')
-parser.add_argument('--is_human', action='store_true', default=False)
+parser.add_argument('--is_human', action='store_true', default=True)
 
 # Adjust learning rate and for SGD Optimizer
 def adjust_learning_rate(optimizer, epoch,alpha_plan):
