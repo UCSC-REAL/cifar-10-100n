@@ -74,7 +74,7 @@ def train(epoch, train_loader, model, optimizer):
     return train_acc
 
 # Evaluate the Model
-def evaluate(test_loader, model, best_acc_=0):
+def evaluate(test_loader, model):
     model.eval()    # Change model to 'eval' mode.
     print('previous_best', best_acc_)
     correct = 0
@@ -88,7 +88,7 @@ def evaluate(test_loader, model, best_acc_=0):
         correct += (pred.cpu() == labels).sum()
     acc = 100*float(correct)/float(total)
 
-    return acc, best_acc_
+    return acc
 
 
 
@@ -141,8 +141,7 @@ model.cuda()
 
 epoch=0
 train_acc = 0
-best_acc_ = 0.0
-#print(best_acc_)
+
 # training
 noise_prior_cur = noise_prior
 for epoch in range(args.n_epoch):
@@ -152,7 +151,7 @@ for epoch in range(args.n_epoch):
     model.train()
     train_acc = train(epoch, train_loader, model, optimizer)
     # evaluate models
-    test_acc, best_acc_ = evaluate(test_loader=test_loader, model=model,best_acc_=best_acc_)
+    test_acc = evaluate(test_loader=test_loader, model=model)
     # save results
     print('train acc on train images is ', train_acc)
     print('test acc on test images is ', test_acc)
