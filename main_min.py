@@ -6,16 +6,11 @@ from torch.autograd import Variable
 from data.datasets import input_dataset
 from models import *
 import argparse
-import numpy as np
 
-
-from loss import forward_loss, loss_cross_entropy,loss_spl, f_beta, f_alpha_hard, lq_loss, loss_peer, loss_cores, forward_loss
-from torch.utils.data import RandomSampler
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--lr', type = float, default = 0.05)
-parser.add_argument('--loss', type = str, help = 'ce', default = 'ce')
-parser.add_argument('--noise_type', type = str, help='clean_label, aggre_label, worse_label, random_label1, random_label2, random_label3', default='clean_label')
+parser.add_argument('--lr', type = float, default = 0.1)
+parser.add_argument('--noise_type', type = str, help='clean, aggre, worst, rand1, rand2, rand3, clean100, noisy100', default='clean')
 parser.add_argument('--noise_path', type = str, help='path of CIFAR-10_human.pt', default='./data/CIFAR-10_human.pt')
 parser.add_argument('--dataset', type = str, help = ' cifar10 or cifar100', default = 'cifar10')
 parser.add_argument('--n_epoch', type=int, default=100)
