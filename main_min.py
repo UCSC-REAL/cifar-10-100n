@@ -133,9 +133,6 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                   num_workers=args.num_workers,
                                   shuffle=False)
 alpha_plan = [0.1] * 60 + [0.01] * 40
-#alpha_plan = []
-#for ii in range(args.n_epoch):
-#    alpha_plan.append(learning_rate*pow(0.95,ii))
 model.cuda()
 
 
