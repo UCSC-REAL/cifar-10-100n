@@ -17,7 +17,7 @@ clean_label = noise_label['clean_label']
 noisy_label = noise_label['noisy_label']
 ```
 
-# Training on CIFAR-10-100N with the Cross-Entropy loss
+# Training on CIFAR-N with the Cross-Entropy loss
 ## CIFAR-10N 
 ```shell
 # NOISE_TYPE: [clean, aggre, worst, rand1, rand2, rand3]
