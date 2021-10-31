@@ -36,3 +36,10 @@ CUDA_VISIBLE_DEVICES=0 python3 main.py --dataset cifar100 --noise_type NOISE_TYP
 # Use the synthetic noise that has the same noise transition matrix as human annotations
 CUDA_VISIBLE_DEVICES=0 python3 main.py --dataset cifar100 --noise_type NOISE_TYPE
 ```
+
+# Additional dataset information
+We include additional side information during the noisy-label collection in <code>side_info_cifar10N.csv</code> and <code>side_info_cifar100N.csv</code>.
+A brief introduction of these two files:
+- **Image-batch:** a subset of indexes of the CIFAR training images.
+- **Worker-id:** the encrypted worker id on Amazon Mechanical Turk.
+- **Work-time-in-seconds:** the time (in seconds) a worker spent on annotating the corresponding image batch.
