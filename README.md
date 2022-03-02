@@ -24,6 +24,9 @@ noisy_label = noise_file['noisy_label']
 
 # Dataloader for CIFAR-N (Tensorflow)
 
+Note: image order of tensorflow dataset does not match with CIFAR-N (PyTorch dataloader)
+TODO: (1) Customize tensorflow dataloader with ziped images; (2) Similiarity comparisons among images to obtain the order mapping.
+
 ### CIFAR-10N 
 ```python
 import numpy as np
