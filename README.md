@@ -24,28 +24,40 @@ noisy_label = noise_file['noisy_label']
 
 # Dataloader for CIFAR-N (Tensorflow)
 
-Note: image order of tensorflow dataset does not match with CIFAR-N (PyTorch dataloader)
-TODO: (1) Customize tensorflow dataloader with ziped images; (2) Similiarity comparisons among images to obtain the order mapping.
+Note: Image order of tensorflow dataset (tfds.load, binary version of CIFAR) does not match with PyTorch dataloader (python version of CIFAR).
 
 ### CIFAR-10N 
 ```python
 import numpy as np
-noise_file = np.load('./data/CIFAR-10_human.npy', allow_pickle=True)
+noise_file = np.load('./data/CIFAR-10_human_ordered.npy', allow_pickle=True)
 clean_label = noise_file.item().get('clean_label')
 worst_label = noise_file.item().get('worse_label')
 aggre_label = noise_file.item().get('aggre_label')
 random_label1 = noise_file.item().get('random_label1')
 random_label2 = noise_file.item().get('random_label2')
 random_label3 = noise_file.item().get('random_label3')
+# The noisy label matches with following tensorflow dataloader
+train_ds, test_ds = tfds.load('cifar10', split=['train','test'], as_supervised=True, batch_size = -1)
+train_images, train_labels = tfds.as_numpy(train_ds) 
+# You may want to replace train_labels by CIFAR-N noisy label sets
 ```
 
 ### CIFAR-100N 
 ```python
 import numpy as np
-noise_file = np.load('./data/CIFAR-100_human.npy', allow_pickle=True)
+noise_file = np.load('./data/CIFAR-100_human_ordered.npy', allow_pickle=True)
 clean_label = noise_file.item().get('clean_label')
 noise_label = noise_file.item().get('noise_label')
+# The noisy label matches with following tensorflow dataloader
+train_ds, test_ds = tfds.load('cifar100', split=['train','test'], as_supervised=True, batch_size = -1)
+train_images, train_labels = tfds.as_numpy(train_ds) 
+# You may want to replace train_labels by CIFAR-N noisy label sets
 ```
+
+The image order from tfds to pytorch dataloader is given below:
+- **image_order_c10.npy:** a numpy array with length 50K, the i-th element denotes the index of i-th unshuffled tfds (binary-version) CIFAR-10 training image in the Pytorch (python-version) ones.
+- **image_order_c100.npy:** a numpy array with length 50K, the i-th element denotes the index of i-th unshuffled tfds (binary-version) CIFAR-100 training image in the Pytorch (python-version) ones.
+
 
 # Training on CIFAR-N with Cross-Entropy (PyTorch)
 ### CIFAR-10N 
