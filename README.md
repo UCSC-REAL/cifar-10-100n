@@ -57,22 +57,22 @@ There are two tasks: learning and detection. Each task includes two subcompetiti
 
 ## Learning
 ### Background
-Image classification task in deep learning requires assigning labels to specific images. Annotating labels for training use often requires tremendous expenses on the payment for hiring human annotators. The pervasive noisy labels from data annotation present significant challenges to training a quality machine learning model.
+Image classification task in deep learning requires assigning labels to specific images. Annotating labels for training use often requires tremendous expenses on the payment for hiring human annotators. The pervasive noisy labels from data annotation present significant challenges to train a quality machine learning model.
 
 ### Goal
 The goal of this task is to explore the potential of AI approaches when we only have access to human annotated noisy labels (CIFAR-N). Specifically, for each label-noise setting, the proposed method will train only on the noisy labels with the corresponding training images. The evaluation is based on the accuracy of the trained models on the CIFAR test datasets.
 
-This task does not have specific requirements on the experiment settings, i.e., the model architecture, data augmentation strategies, etc. However, the use of clean labels or pre-trained models on CIFAR datasets,  is not allowed.    
+This task does not have specific requirements on the experiment settings, i.e., the model architecture, data augmentation strategies, etc. However, the use of clean labels or pre-trained models on CIFAR datasets, or any other datasets, is not allowed.   
 
 ### Evaluation metric `learning.py`
-Each submission will be evaluated according to the model's achieved accuracy on the corresponding CIFAR-10/100 test data: denote by $h$ the final model from the submission. We will use  
+Each submission will be evaluated according to the model's achieved accuracy on the corresponding CIFAR-10/100 test data: denote by h the final model from the submission. We will use the following metric to make the final evaluation: 
     $$
     \frac{\sum_{(X,Y) \in \text{CIFAR Test data}} \mathbb 1(h(X) = Y)}{|\text{Test data}|}
     $$
     to make the final evaluation. 
 
 ### Note
- The hyperparameter settings should be consistent for different noise regimes in the same dataset, i.e., there will be at most two sets of hyperparameters, one for CIFAR-10N (aggre, rand1, \& worst), one for CIRFAR-100N.
+The hyperparameter settings should be consistent for different noise regimes in the same dataset, i.e., there will be at most two sets of hyperparameters, one for CIFAR-10N (aggre, rand1, worst), one for CIFAR-100N.
 
 
 ## Detection
@@ -83,7 +83,7 @@ Label noise in real-world datasets encodes wrong correlation patterns and impair
 ### Goal
 The goal is to encourage the design of an algorithmic detection approach to improving the corrupted label detection (a.k.a, finding label errors) on CIFAR-N.
 
-This task does not have specific requirements on the experiment settings, i.e., the model architecture, data augmentation strategies, etc. However, the use of clean labels or pre-trained models on CIFAR datasets,  is not allowed.    
+This task does not have specific requirements on the experiment settings, i.e., the model architecture, data augmentation strategies, etc. However, the use of clean labels or pre-trained models on CIFAR datasets, or any other datasets, is not allowed.   
 
 ### Evaluation metric `detection.py`
 The performance is measured by the $F_1$-score of the detected corrupted instances, which is the harmonic mean of the precision and recall, i.e. 
@@ -94,7 +94,7 @@ $$
 $$
 
 ### Note
-The hyperparameter settings should be consistent for different clusters in the same dataset, i.e., there will be at most two sets of hyperparameters, one for CIFAR-10N, one for CIRFAR-100N. 
+The hyperparameter settings should be consistent for different noise regimes in the same dataset, i.e., there will be at most two sets of hyperparameters, one for CIFAR-10N (aggre, rand1, worst), one for CIFAR-100N.
 
 
 
@@ -105,23 +105,22 @@ The hyperparameter settings should be consistent for different clusters in the s
 - Participants must submit reproducible code with a downloadable link, e.g., GitHub.
 - The script `run.sh` for running the code must be provided. 
 - Environments must be specified in `requirements.txt`.
-- We will run `run.sh` with 5 pre-fixed seeds and take the average performance.
-- For CIFAR-10, there are three noise types: `rand1, worst, aggre`.
-Each participant will receive three ranks. No submission equals the last rank. The scores $s$ for rank $i$ is $s = \max(10 - i, 0)$. The accumulated scores over three noise regimes determine the final score.
+- We will run `run.sh` with 5 pre-fixed seeds. Each run will be evaluated w.r.t. a random selected subset of CIFAR-10/CIFAR-100 test data with replacement, and take the average performance of 5 runs. Each run should output a file named `detection.py`, the example formt is included in Line 52-59 in the file `detection.py`.
+- For CIFAR-10, there are three noise types: rand1, worst, aggre. Each participant will receive three ranks. No submission equals the last rank. ​Our evaluation metric is similar to Borda Count, and the score of the $i$-th rank is given by $\max(11-i, 0)$. The accumulated scores over three noise regimes determine the final score.
 - For CIFAR-100, there is only one dataset. The average performance over 5 seeds determines the winner.
 - We will test the performance by `learning.py` for the learning task or `detection.py` for the detection task.
-- **IMPORTANT:** This competition is time-constrained. We do not recommend spending too much time on CIFAR. Thus the training will be stopped at `3xBaselineTime`. The baseline code (train with cross-entropy and ResNet34) is available at `ce_baseline.py`. For example, if you take 1 hour to run `ce_baseline.py` in your device, your method should not be longer than 3 hours. We will use the best model selected by noisy validation data within `3xBaselineTime`.
+- **IMPORTANT:** This competition is time-constrained. We do not recommend spending too much time on CIFAR. Thus the training will be stopped at `10xBaselineTime`. The baseline code (train with cross-entropy and ResNet34) is available at `ce_baseline.py`. For example, if you take 1 hour to run `ce_baseline.py` in your device, your method should not be longer than 10 hours. We will use the best model selected by noisy validation data within `10xBaselineTime`.
 
 
 ## Report submission and evaluation
-- We use EasyChair for submission. Link is [here](https://easychair.org/conferences/?conf=1stlnlc).
-- A report is preferred, which will be reviewed by our reviewing committee. We have one **Best Innovation Award** for the best report. 
-- We expect the report to be no more than 8 pages using [IJCAI template](https://www.ijcai.org/authors_kit).
-- If you are not willing to submit a report, please submit the link to your code to EasyChair.
+- A report is required, which will be reviewed by our reviewing committee. We have one **Best Innovation Award** for the best report. 
+- The length of report should be 2-8 pages using [IJCAI template](https://www.ijcai.org/authors_kit).
+- The Github link to train/evaluate your code/performance **should be given at the end of Abstract of the report**.
+- The report is not required to be anonymized. We use EasyChair for submission. Link is [here](https://easychair.org/conferences/?conf=1stlnlc).
 
 
 ## Dual submission
-It is not appropriate to submit codes/reports that are identical (or substantially similar) to versions that are also submitted to this competition. In other words, please DO NOT make multiple submissions by simply changing hyperparameters to improve the chance of getting awarded. Such submissions violate our dual submission policy, and the organizers have the right to reject such submissions. But the codes/reports/papers can be previously published, accepted for publication, or submitted in parallel to other conferences or journals.
+It is not appropriate to submit codes/reports that are identical (or substantially similar) to versions that are also submitted to this competition. In other words, please **DO NOT** make multiple submissions by simply changing hyperparameters to improve the chance of getting awarded. Such submissions violate our dual submission policy, and the organizers have the right to reject such submissions. But the codes/reports/papers can be previously published, accepted for publication, or submitted in parallel to other conferences or journals.
 
 
 <!-- # Award
