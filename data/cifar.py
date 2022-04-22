@@ -10,7 +10,7 @@ else:
     import pickle
 import torch
 import torch.utils.data as data
-from .utils import download_url, check_integrity, multiclass_noisify
+from .utils import download_url, check_integrity
 
 class CIFAR10(data.Dataset):
     """`CIFAR10 <https://www.cs.toronto.edu/~kriz/cifar.html>`_ Dataset.
@@ -91,20 +91,7 @@ class CIFAR10(data.Dataset):
                 self.train_noisy_labels = train_noisy_labels.tolist()
                 print(f'noisy labels loaded from {self.noise_path}')
 
-                if not is_human:
-                    T = np.zeros((self.nb_classes,self.nb_classes))
-                    for i in range(len(self.train_noisy_labels)):
-                        T[self.train_labels[i]][self.train_noisy_labels[i]] += 1
-                    T = T/np.sum(T,axis=1)
-                    print(f'Noise transition matrix is \n{T}')
-                    train_noisy_labels = multiclass_noisify(y=np.array(self.train_labels), P=T,
-                                        random_state=0) #np.random.randint(1,10086)
-                    self.train_noisy_labels = train_noisy_labels.tolist()
-                    T = np.zeros((self.nb_classes,self.nb_classes))
-                    for i in range(len(self.train_noisy_labels)):
-                        T[self.train_labels[i]][self.train_noisy_labels[i]] += 1
-                    T = T/np.sum(T,axis=1)
-                    print(f'New synthetic noise transition matrix is \n{T}')
+ 
 
                 for i in range(len(self.train_noisy_labels)):
                     idx_each_class_noisy[self.train_noisy_labels[i]].append(i)
@@ -297,20 +284,7 @@ class CIFAR100(CIFAR10):
                 train_noisy_labels = self.load_label()
                 self.train_noisy_labels = train_noisy_labels.tolist()
                 print(f'noisy labels loaded from {self.noise_type}')
-                if not is_human:
-                    T = np.zeros((self.nb_classes,self.nb_classes))
-                    for i in range(len(self.train_noisy_labels)):
-                        T[self.train_labels[i]][self.train_noisy_labels[i]] += 1
-                    T = T/np.sum(T,axis=1)
-                    print(f'Noise transition matrix is \n{T}')
-                    train_noisy_labels = multiclass_noisify(y=np.array(self.train_labels), P=T,
-                                        random_state=0) #np.random.randint(1,10086)
-                    self.train_noisy_labels = train_noisy_labels.tolist()
-                    T = np.zeros((self.nb_classes,self.nb_classes))
-                    for i in range(len(self.train_noisy_labels)):
-                        T[self.train_labels[i]][self.train_noisy_labels[i]] += 1
-                    T = T/np.sum(T,axis=1)
-                    print(f'New synthetic noise transition matrix is \n{T}')
+
                 for i in range(len(self.train_labels)):
                     idx_each_class_noisy[self.train_noisy_labels[i]].append(i)
                 class_size_noisy = [len(idx_each_class_noisy[i]) for i in range(100)]
