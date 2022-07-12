@@ -18,7 +18,7 @@ parser.add_argument('--noise_type', type = str, help='clean, aggre, worst, rand1
 parser.add_argument('--noise_path', type = str, help='path of CIFAR-10_human.pt', default=None)
 parser.add_argument('--dataset', type = str, help = ' cifar10 or cifar100', default = 'cifar10')
 parser.add_argument('--n_epoch', type=int, default=100)
-parser.add_argument('--seed', type=int, default=0)  # we will test your code with 5 different seeds. The seeds are generated randomly and fixed for all participants.
+parser.add_argument('--seed', type=int, default=10)  # we will test your code with 5 different seeds. The seeds are generated randomly and fixed for all participants.
 parser.add_argument('--print_freq', type=int, default=50)
 parser.add_argument('--num_workers', type=int, default=4, help='how many subprocesses to use for data loading')
 
@@ -104,7 +104,7 @@ if args.noise_path is None:
         raise NameError(f'Undefined dataset {args.dataset}')
 
 
-train_dataset, val_dataset, test_dataset, num_classes, num_training_samples = input_dataset(args.dataset,args.noise_type, args.noise_path, is_human = True, val_ratio = args.val_ratio)
+train_dataset, val_dataset, test_dataset, num_classes, num_training_samples = input_dataset(args.dataset,args.noise_type, args.noise_path, args.seed, is_human = True, val_ratio = args.val_ratio)
 # print('train_labels:', len(train_dataset.train_labels), train_dataset.train_labels[:10])
 # load model
 print('building model...')
