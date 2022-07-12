@@ -29,7 +29,7 @@ test_cifar100_transform = transforms.Compose([
     transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761)),
 ])
 
-def input_dataset(dataset, noise_type, noise_path, is_human, val_ratio = 0.1):
+def input_dataset(dataset, noise_type, noise_path, seed, is_human, val_ratio = 0.1):
     num_training_samples = 50000
     idx_full = np.arange(num_training_samples)
     np.random.shuffle(idx_full)
@@ -40,6 +40,7 @@ def input_dataset(dataset, noise_type, noise_path, is_human, val_ratio = 0.1):
                                 download=True,  
                                 train=True, 
                                 transform = train_cifar10_transform,
+                                seed = seed,
                                 noise_type = noise_type,
                                 noise_path = noise_path, 
                                 is_human=is_human,
@@ -49,6 +50,7 @@ def input_dataset(dataset, noise_type, noise_path, is_human, val_ratio = 0.1):
                                 download=False,  
                                 train=False, 
                                 transform = test_cifar10_transform,
+                                seed = seed,
                                 noise_type=noise_type,
                           )
         
@@ -59,6 +61,7 @@ def input_dataset(dataset, noise_type, noise_path, is_human, val_ratio = 0.1):
                                 download=True,  
                                 train=True, 
                                 transform=train_cifar100_transform,
+                                seed = seed,
                                 noise_type=noise_type,
                                 noise_path = noise_path, is_human=is_human
                             )
@@ -69,6 +72,7 @@ def input_dataset(dataset, noise_type, noise_path, is_human, val_ratio = 0.1):
                                 download=False,  
                                 train=False, 
                                 transform=test_cifar100_transform,
+                                seed = seed,
                                 noise_type=noise_type
                             )
         

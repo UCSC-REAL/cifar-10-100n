@@ -1,5 +1,6 @@
 from __future__ import print_function
 from PIL import Image
+import random
 import os
 import os.path
 import numpy as np
@@ -46,11 +47,12 @@ class CIFAR10(data.Dataset):
     ]
 
     def __init__(self, root, train=True,
-                 transform=None, target_transform=None,
+                 transform=None, seed=10, target_transform=None,
                  download=False,
                  noise_type=None, noise_path = None, is_human=True):
         self.root = os.path.expanduser(root)
         self.transform = transform
+        self.seed = seed
         self.target_transform = target_transform
         self.train = train  # training set or test set
         self.dataset='cifar10'
@@ -117,6 +119,10 @@ class CIFAR10(data.Dataset):
             fo.close()
             self.test_data = self.test_data.reshape((10000, 3, 32, 32))
             self.test_data = self.test_data.transpose((0, 2, 3, 1))  # convert to HWC
+            whole_idx = [idx for idx in range(10000)]
+            selected_idx = random.sample(whole_idx, k=8000)
+            self.test_data = self.test_data[selected_idx]
+            self.test_labels = [self.test_labels[i] for i in selected_idx]
 
     def load_label(self):
         #NOTE only load manual training label
@@ -237,11 +243,12 @@ class CIFAR100(CIFAR10):
  
 
     def __init__(self, root, train=True,
-                 transform=None, target_transform=None,
+                 transform=None, seed=10, target_transform=None,
                  download=False,
                  noise_type=None, noise_rate=0.2, random_state=0,noise_path = None, is_human = True):
         self.root = os.path.expanduser(root)
         self.transform = transform
+        self.seed = seed
         self.target_transform = target_transform
         self.train = train  # training set or test set
         self.dataset='cifar100'
@@ -309,3 +316,7 @@ class CIFAR100(CIFAR10):
             fo.close()
             self.test_data = self.test_data.reshape((10000, 3, 32, 32))
             self.test_data = self.test_data.transpose((0, 2, 3, 1))  # convert to HWC
+            whole_idx = [idx for idx in range(10000)]
+            selected_idx = random.sample(whole_idx, k=8000)
+            self.test_data = self.test_data[selected_idx]
+            self.test_labels = [self.test_labels[i] for i in selected_idx]
