@@ -44,6 +44,8 @@ train_images, train_labels = tfds.as_numpy(train_ds)
 # You may want to replace train_labels by CIFAR-N noisy label sets
 ```
 
+**Reminder:** CIFAR-10N is now available at tensorflow datasets. Please check [here](https://www.tensorflow.org/datasets/catalog/cifar10_n) for more details!
+
 ### CIFAR-100N 
 ```python
 import numpy as np
