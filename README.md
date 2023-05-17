@@ -1,4 +1,11 @@
+**[Update 5/17/2023]** A [demo](https://github.com/Docta-ai/docta/blob/master/demo/docta_cifar10.ipynb) for automatically detecting label errors on CIFAR-N is availabel at [Docta](https://github.com/Docta-ai/docta) now!
+- **Docta**: A **Doc**tor for your da**ta**
+- An advanced data-centric AI platform that offers a comprehensive range of services aimed at detecting and rectifying issues in your data.
+
+
 This repository is the official dataset release and Pytorch implementation of "[Learning with Noisy Labels Revisited: A Study Using Real-World Human Annotations](https://openreview.net/forum?id=TBWA6PLJZQm&referrer=%5BAuthor%20Console%5D(%2Fgroup%3Fid%3DICLR.cc%2F2022%2FConference%2FAuthors%23your-submissions))" accepted by ICLR2022. We collected and published re-annotated versions of the CIFAR-10 and CIFAR-100 data which contains real-world human annotation errors. We show how these noise patterns deviate from the classically assumed ones and what the new challenges are. The website of CIFAR-N is available at [http://www.noisylabels.com/](http://www.noisylabels.com/).
+
+----------------
 
 **Competition:** Please refer to the branch `ijcai-lmnl-2022` for details of 1st Learning with Noisy Labels Challenge in IJCAI 2022. Also available at [http://competition.noisylabels.com/](http://competition.noisylabels.com/).
 
